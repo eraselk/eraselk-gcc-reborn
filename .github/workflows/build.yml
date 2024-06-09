@@ -18,15 +18,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Resources
       run: |
-        if ! [ -x "resources.sh" ]; then
-        chmod +x resources.sh
-        fi
         ./resources.sh
     - name: Build and Release
       run: |
-        if ! [ -x "build.sh" ]; then
-        chmod +x build.sh
-        fi
         ./build.sh
 
     - name: Upload artifact
