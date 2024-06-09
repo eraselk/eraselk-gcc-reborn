@@ -1,0 +1,37 @@
+name: GCC BUILD
+
+on:
+  workflow_dispatch:
+  watch:
+    types: [started]
+
+env:
+  GITHUB_EMAIL: ${{ secrets.EMAIL }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  GITHUB_USER: ${{ secrets.USERNAME }}
+
+jobs:
+  build-arm64:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: Resources
+      run: |
+        if ! [ -x "resources.sh" ]; then
+        chmod +x resources.sh
+        fi
+        ./resources.sh
+    - name: Build and Release
+      run: |
+        if ! [ -x "build.sh" ]; then
+        chmod +x build.sh
+        fi
+        ./build.sh
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: aarch64-tarball
+        path: |
+          *.tar.gz
