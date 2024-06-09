@@ -14,7 +14,6 @@ download() {
     rm -f gcc-tarball
     mv -f gcc* gcc
     git clone -b v1.5.5 https://github.com/facebook/zstd zstd
-  fi
   sed -i '/^development=/s/true/false/' binutils/bfd/development.sh
   cd gcc
   ./contrib/download_prerequisites
